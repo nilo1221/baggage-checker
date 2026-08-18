@@ -26,7 +26,7 @@ export default function Footer() {
             <Link href="/" className="flex items-center space-x-2 mb-4">
               <span className="text-2xl">✈️</span>
               <span className="text-xl font-bold text-white">
-                Baggage Checker
+                Pack & Fly
               </span>
             </Link>
             <p className="text-sm text-gray-400">
@@ -80,7 +80,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-          <p>© {new Date().getFullYear()} Baggage Checker. All rights reserved.</p>
+          <p> 2024 Pack & Fly. All rights reserved.</p>
           <p className="mt-2 md:mt-0">
             Powered by Flight Knight — Affiliate links used throughout the site.
           </p>

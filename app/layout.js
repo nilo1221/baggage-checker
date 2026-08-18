@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
 export const metadata = {
-  title: 'Baggage Checker - Airline Cabin Bag Finder',
+  title: 'Pack & Fly - Airline Cabin Bag Finder',
   description: 'Find the perfect Flight Knight luggage for your flight. Compare airline baggage rules in seconds.',
 }
 

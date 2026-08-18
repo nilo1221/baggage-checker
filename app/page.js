@@ -114,11 +114,12 @@ export default function Home() {
           alt="Airplane taking off"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-purple-900/70 to-blue-900/80"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-sky-950/85 via-sky-900/70 to-sky-950/85"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-sky-900/60 to-transparent"></div>
         <div className="relative z-10 text-center px-6">
           <span className="text-7xl mb-6 block">✈️</span>
           <h1 className="text-6xl md:text-8xl font-bold text-white mb-6 drop-shadow-2xl">
-            Baggage Checker
+            Pack & Fly
           </h1>
           <p className="text-2xl md:text-3xl text-blue-100 max-w-3xl mx-auto mb-10">
             Find the perfect Flight Knight luggage for your flight in seconds
