@@ -11,8 +11,8 @@ export default function Home() {
   const airlines = [
     { id: 'ryanair', name: 'Ryanair', color: 'bg-blue-600', country: 'Ireland', lat: 53.4, lng: -6.3 },
     { id: 'wizzair', name: 'Wizz Air', color: 'bg-purple-600', country: 'Hungary', lat: 47.5, lng: 19.0 },
-    { id: 'easyjet', name: 'easyJet', color: 'bg-orange-600', country: 'UK', lat: 51.5, lng: -0.1 },
-    { id: 'britishairways', name: 'British Airways', color: 'bg-blue-800', country: 'UK', lat: 51.5, lng: -0.1 },
+    { id: 'easyjet', name: 'easyJet', color: 'bg-orange-600', country: 'UK', lat: 51.5, lng: -0.2 },
+    { id: 'britishairways', name: 'British Airways', color: 'bg-blue-800', country: 'UK', lat: 51.5, lng: 0.0 },
     { id: 'airfrance', name: 'Air France', color: 'bg-blue-500', country: 'France', lat: 48.9, lng: 2.3 },
     { id: 'klm', name: 'KLM', color: 'bg-blue-700', country: 'Netherlands', lat: 52.3, lng: 4.8 }
   ]
@@ -118,7 +118,7 @@ export default function Home() {
                       {/* Pulse effect */}
                       <div className={`absolute inset-0 rounded-full ${air.color} opacity-30 animate-ping`}></div>
                       {/* Main marker */}
-                      <div className={`relative w-6 h-6 rounded-full ${air.color} border-3 border-white shadow-lg transition-transform group-hover:scale-125 flex items-center justify-center`}>
+                      <div className={`relative w-6 h-6 rounded-full ${air.color} border-2 border-white shadow-lg transition-transform group-hover:scale-125 flex items-center justify-center`}>
                         <div className="w-2 h-2 bg-white rounded-full"></div>
                       </div>
                       {/* Tooltip */}

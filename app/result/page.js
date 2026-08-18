@@ -2,6 +2,7 @@
 
 import { Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
+import { getDeepLink, TRACKING_PIXEL } from '../../lib/affiliate'
 
 function ResultContent() {
   const searchParams = useSearchParams()
@@ -9,9 +10,6 @@ function ResultContent() {
   
   const airline = searchParams.get('airline')
   const ticket = searchParams.get('ticket')
-
-  const AFFILIATE_LINK = 'https://flightknight.pxf.io/c/7316518/3849106/46776'
-  const TRACKING_PIXEL = 'https://imp.pxf.io/i/7316518/3849106/46776'
 
   const products = {
     ryanair: {
@@ -198,17 +196,6 @@ function ResultContent() {
   const airlineName = airlineNames[airline]
   const ticketName = ticketNames[airline][ticket]
 
-  const getDeepLink = (category) => {
-    const categoryUrls = {
-      backpacks: 'https://flightknight.com/collections/backpacks',
-      'cabin-cases': 'https://flightknight.com/collections/cabin-cases',
-      'checked-cases': 'https://flightknight.com/collections/checked-cases',
-      'suitcase-sets': 'https://flightknight.com/collections/suitcase-sets'
-    }
-    const target = categoryUrls[category] || 'https://flightknight.com/collections/cabin-cases'
-    return `${AFFILIATE_LINK}?u=${encodeURIComponent(target)}`
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
       <img 
@@ -217,7 +204,6 @@ function ResultContent() {
         style={{ position: 'absolute', visibility: 'hidden' }}
         height="0" 
         width="0" 
-        border="0"
       />
       
       <div className="container mx-auto px-4 py-8">
@@ -270,12 +256,12 @@ function ResultContent() {
             </div>
 
             <a
-              href={getDeepLink(product.category)}
+              href={getDeepLink(`/collections/${product.category}`)}
               target="_blank"
-              rel="sponsored"
+              rel="sponsored noopener noreferrer"
               className="block w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all"
             >
-              Shop {product.name.split(' ').slice(2).join(' ')} on Flight Knight →
+              Shop {product.name} on Flight Knight →
             </a>
 
             <p className="mt-4 text-xs text-gray-500 text-center">

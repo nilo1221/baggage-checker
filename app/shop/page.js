@@ -2,12 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-
-const AFFILIATE_LINK = 'https://flightknight.pxf.io/c/7316518/3849106/46776'
-
-const getDeepLink = (path) => {
-  return `${AFFILIATE_LINK}?u=${encodeURIComponent(`https://flightknight.com${path}`)}`
-}
+import { getDeepLink } from '../../lib/affiliate'
 
 const products = [
   {
@@ -146,7 +141,7 @@ export default function ShopPage() {
                 key={product.id}
                 href={getDeepLink(product.path)}
                 target="_blank"
-                rel="sponsored"
+                rel="sponsored noopener noreferrer"
                 className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow group"
               >
                 <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl h-48 flex items-center justify-center mb-4 text-6xl group-hover:scale-105 transition-transform">
