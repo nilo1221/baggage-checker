@@ -1,4 +1,8 @@
-import { airlines } from '../lib/airlines'
+'use client'
+
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { airlines, ticketTypes } from '../lib/airlines'
 
 const AirlineLogo = ({ id }) => {
   const logos = {
@@ -50,6 +54,37 @@ const AirlineLogo = ({ id }) => {
 }
 
 export default function Home() {
+  const [airline, setAirline] = useState('')
+  const [ticketType, setTicketType] = useState('')
+  const [step, setStep] = useState(1)
+  const router = useRouter()
+
+  const selectedAirline = airlines.find((a) => a.id === airline)
+  const tickets = airline ? ticketTypes[airline] : []
+
+  const handleAirlineSelect = (id) => {
+    setAirline(id)
+    setTicketType('')
+    setStep(2)
+  }
+
+  const handleTicketSelect = (id) => {
+    setTicketType(id)
+    setStep(3)
+  }
+
+  const handleCheck = () => {
+    if (airline && ticketType) {
+      router.push(`/result?airline=${airline}&ticket=${ticketType}`)
+    }
+  }
+
+  const reset = () => {
+    setAirline('')
+    setTicketType('')
+    setStep(1)
+  }
+
   return (
     <div className="min-h-screen bg-slate-900">
       <div className="relative h-screen flex items-center justify-center overflow-hidden">
@@ -99,6 +134,126 @@ export default function Home() {
                 <AirlineLogo id={air.id} />
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="py-20 bg-slate-900">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <p className="text-sm text-blue-300 uppercase tracking-widest mb-2">Find your bag</p>
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Baggage Finder Wizard</h2>
+              <p className="text-blue-200 text-lg max-w-2xl mx-auto">
+                Select your airline and ticket type. We will find the perfect Flight Knight luggage for your trip.
+              </p>
+            </div>
+
+            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl">
+              <div className="flex items-center justify-center mb-10">
+                {[1, 2, 3].map((s) => (
+                  <div key={s} className="flex items-center">
+                    <div
+                      className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg ${
+                        step >= s ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white' : 'bg-white/10 text-gray-500'
+                      }`}
+                    >
+                      {s}
+                    </div>
+                    {s < 3 && (
+                      <div className={`w-16 h-1 ${step > s ? 'bg-gradient-to-r from-blue-500 to-purple-500' : 'bg-white/10'}`}></div>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {step === 1 && (
+                <div>
+                  <h3 className="text-2xl font-bold text-white text-center mb-2">Select your airline</h3>
+                  <p className="text-blue-200 text-center mb-8">Choose the airline you are flying with</p>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {airlines.map((air) => (
+                      <button
+                        key={air.id}
+                        onClick={() => handleAirlineSelect(air.id)}
+                        className={`p-6 rounded-xl border-2 text-left transition-all hover:scale-105 ${
+                          airline === air.id
+                            ? `${air.color} text-white border-transparent shadow-lg`
+                            : 'bg-white/5 border-white/10 text-white hover:border-white/30 hover:bg-white/10'
+                        }`}
+                      >
+                        <div className="font-bold text-xl">{air.name}</div>
+                        <div className={`text-sm ${airline === air.id ? 'text-white/80' : 'text-blue-200'}`}>{air.country}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {step === 2 && (
+                <div>
+                  <h3 className="text-2xl font-bold text-white text-center mb-2">Select your ticket type</h3>
+                  <p className="text-blue-200 text-center mb-8">{selectedAirline?.name} options</p>
+                  <div className="space-y-4">
+                    {tickets.map((ticket) => (
+                      <button
+                        key={ticket.id}
+                        onClick={() => handleTicketSelect(ticket.id)}
+                        className={`w-full p-6 rounded-xl border-2 text-left transition-all hover:scale-[1.02] ${
+                          ticketType === ticket.id
+                            ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 border-blue-400'
+                            : 'bg-white/5 border-white/10 hover:border-white/30 hover:bg-white/10'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <div className="font-bold text-xl text-white">{ticket.name}</div>
+                            <div className="text-blue-200 text-sm mt-1">{ticket.description}</div>
+                          </div>
+                          <span className="px-4 py-1 bg-white/10 text-blue-100 text-sm rounded-full border border-white/10">
+                            {ticket.tag}
+                          </span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                  <div className="mt-6 text-center">
+                    <button onClick={reset} className="text-blue-300 hover:text-white font-medium transition-colors">
+                      ← Change airline
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {step === 3 && (
+                <div className="text-center">
+                  <h3 className="text-2xl font-bold text-white mb-2">Ready to find your bag</h3>
+                  <p className="text-blue-200 mb-8">
+                    {selectedAirline?.name} — {tickets.find((t) => t.id === ticketType)?.name}
+                  </p>
+                  <div className="bg-white/5 rounded-2xl p-6 mb-8 border border-white/10">
+                    <div className="text-5xl mb-4">🎒</div>
+                    <p className="text-white text-lg">
+                      We will recommend the perfect size based on your selection.
+                    </p>
+                  </div>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button
+                      onClick={handleCheck}
+                      className="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-bold text-lg hover:from-blue-600 hover:to-purple-600 transition-all shadow-lg"
+                    >
+                      Find My Baggage
+                    </button>
+                    <button
+                      onClick={reset}
+                      className="w-full sm:w-auto px-10 py-4 border-2 border-white/20 text-white rounded-xl font-bold hover:border-white/40 transition-all"
+                    >
+                      Start Over
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
