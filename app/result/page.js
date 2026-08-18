@@ -20,21 +20,24 @@ function ResultContent() {
         description: 'Perfect for Ryanair Standard (free personal bag)',
         features: ['Fits under seat', 'Free with Standard ticket', 'Lightweight & durable'],
         price: '£24.99',
-        image: '🎒'
+        image: '🎒',
+        category: 'backpacks'
       },
       priority: {
         name: '40x30x20cm Travel Backpack',
         description: 'Ideal for Ryanair Priority (cabin bag)',
         features: ['Overhead locker size', 'Priority boarding required', 'Laptop compartment'],
         price: '£24.99',
-        image: '🎒'
+        image: '🎒',
+        category: 'cabin-cases'
       },
       flexi: {
         name: '55x40x20cm Travel Backpack',
         description: 'Maximum size for Ryanair Flexi Plus',
         features: ['Largest cabin size', 'All baggage included', 'Premium features'],
         price: '£24.99',
-        image: '🎒'
+        image: '🎒',
+        category: 'cabin-cases'
       }
     },
     wizzair: {
@@ -43,21 +46,24 @@ function ResultContent() {
         description: 'Perfect for Wizz Air Basic (free personal bag)',
         features: ['Fits under seat', 'Free with Basic ticket', 'Lightweight & durable'],
         price: '£24.99',
-        image: '🎒'
+        image: '🎒',
+        category: 'backpacks'
       },
       wizzgo: {
         name: '55x40x20cm Travel Backpack',
         description: 'Ideal for Wizz Air WIZZ Go (cabin bag)',
         features: ['Overhead locker size', 'WIZZ Go fare required', 'Laptop compartment'],
         price: '£24.99',
-        image: '🎒'
+        image: '🎒',
+        category: 'cabin-cases'
       },
       wizzplus: {
         name: '55x40x20cm Travel Backpack',
         description: 'Maximum size for Wizz Air WIZZ Plus',
         features: ['Largest cabin size', 'All baggage included', 'Premium features'],
         price: '£24.99',
-        image: '🎒'
+        image: '🎒',
+        category: 'cabin-cases'
       }
     },
     easyjet: {
@@ -66,14 +72,16 @@ function ResultContent() {
         description: 'Perfect for easyJet Standard (free cabin bag)',
         features: ['Overhead locker size', 'Free with Standard ticket', 'Laptop compartment'],
         price: '£24.99',
-        image: '🎒'
+        image: '🎒',
+        category: 'cabin-cases'
       },
       flexi: {
         name: '55x40x20cm Travel Backpack',
         description: 'Maximum size for easyJet Flexi',
         features: ['Largest cabin size', 'All baggage included', 'Premium features'],
         price: '£24.99',
-        image: '🎒'
+        image: '🎒',
+        category: 'cabin-cases'
       }
     },
     britishairways: {
@@ -82,14 +90,16 @@ function ResultContent() {
         description: 'Perfect for British Airways Economy',
         features: ['Overhead locker size', 'Fits BA requirements', 'Laptop compartment'],
         price: '£24.99',
-        image: '🎒'
+        image: '🎒',
+        category: 'cabin-cases'
       },
       business: {
         name: '55x40x20cm Travel Backpack',
         description: 'Premium choice for British Airways Business',
         features: ['Largest cabin size', 'Premium features', 'Business travel ready'],
         price: '£24.99',
-        image: '🎒'
+        image: '🎒',
+        category: 'cabin-cases'
       }
     },
     airfrance: {
@@ -98,14 +108,16 @@ function ResultContent() {
         description: 'Perfect for Air France Economy',
         features: ['Fits AF maximum dimensions', 'Overhead locker size', 'Laptop compartment'],
         price: '£24.99',
-        image: '🎒'
+        image: '🎒',
+        category: 'cabin-cases'
       },
       business: {
         name: '55x35x25cm Travel Backpack',
         description: 'Premium choice for Air France Business',
         features: ['Fits AF maximum dimensions', 'Premium features', 'Business travel ready'],
         price: '£24.99',
-        image: '🎒'
+        image: '🎒',
+        category: 'cabin-cases'
       }
     },
     klm: {
@@ -114,14 +126,16 @@ function ResultContent() {
         description: 'Perfect for KLM Economy',
         features: ['Fits KLM maximum dimensions', 'Overhead locker size', 'Laptop compartment'],
         price: '£24.99',
-        image: '🎒'
+        image: '🎒',
+        category: 'cabin-cases'
       },
       business: {
         name: '55x35x25cm Travel Backpack',
         description: 'Premium choice for KLM Business',
         features: ['Fits KLM maximum dimensions', 'Premium features', 'Business travel ready'],
         price: '£24.99',
-        image: '🎒'
+        image: '🎒',
+        category: 'cabin-cases'
       }
     }
   }
@@ -184,6 +198,17 @@ function ResultContent() {
   const airlineName = airlineNames[airline]
   const ticketName = ticketNames[airline][ticket]
 
+  const getDeepLink = (category) => {
+    const categoryUrls = {
+      backpacks: 'https://flightknight.com/collections/backpacks',
+      'cabin-cases': 'https://flightknight.com/collections/cabin-cases',
+      'checked-cases': 'https://flightknight.com/collections/checked-cases',
+      'suitcase-sets': 'https://flightknight.com/collections/suitcase-sets'
+    }
+    const target = categoryUrls[category] || 'https://flightknight.com/collections/cabin-cases'
+    return `${AFFILIATE_LINK}?u=${encodeURIComponent(target)}`
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
       <img 
@@ -245,12 +270,12 @@ function ResultContent() {
             </div>
 
             <a
-              href={AFFILIATE_LINK}
+              href={getDeepLink(product.category)}
               target="_blank"
               rel="sponsored"
               className="block w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all"
             >
-              Shop Now on Flight Knight →
+              Shop {product.name.split(' ').slice(2).join(' ')} on Flight Knight →
             </a>
 
             <p className="mt-4 text-xs text-gray-500 text-center">
