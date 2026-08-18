@@ -1,12 +1,12 @@
 'use client'
 
 import { Suspense } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import { getDeepLink, TRACKING_PIXEL } from '../../lib/affiliate'
 
 function ResultContent() {
   const searchParams = useSearchParams()
-  const router = useRouter()
   
   const airline = searchParams.get('airline')
   const ticket = searchParams.get('ticket')
@@ -181,12 +181,12 @@ function ResultContent() {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-800 mb-4">Invalid Selection</h1>
-          <button
-            onClick={() => router.push('/')}
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          <Link
+            href="/"
+            className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
             Go Back
-          </button>
+          </Link>
         </div>
       </div>
     )
@@ -208,13 +208,13 @@ function ResultContent() {
       
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
-          <button
-            onClick={() => router.push('/')}
-            className="mb-6 flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-semibold"
+          <Link
+            href="/"
+            className="mb-6 inline-flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-semibold"
           >
             <span>←</span>
             <span>Check Another Flight</span>
-          </button>
+          </Link>
 
           <div className="bg-white rounded-2xl shadow-xl p-8">
             <div className="text-center mb-6">

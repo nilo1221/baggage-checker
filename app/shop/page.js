@@ -1,13 +1,12 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { getDeepLink } from '../../lib/affiliate'
 import { products, categories } from '../../lib/products'
 import { airlines } from '../../lib/airlines'
 
 export default function ShopPage() {
-  const router = useRouter()
   const [selectedCategory, setSelectedCategory] = useState('All')
 
   const airlineColor = useMemo(() => {
@@ -26,13 +25,13 @@ export default function ShopPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
-          <button
-            onClick={() => router.push('/')}
-            className="mb-6 flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-semibold transition-colors"
+          <Link
+            href="/"
+            className="mb-6 inline-flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-semibold transition-colors"
           >
             <span>←</span>
             <span>Back to Checker</span>
-          </button>
+          </Link>
 
           <div className="text-center mb-10">
             <span className="text-5xl mb-4 block">🛍️</span>

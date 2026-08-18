@@ -1,6 +1,7 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { getDeepLink } from '../../lib/affiliate'
 
 const faqs = [
   {
@@ -30,19 +31,17 @@ const faqs = [
 ]
 
 export default function FAQPage() {
-  const router = useRouter()
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-3xl mx-auto">
-          <button
-            onClick={() => router.push('/')}
-            className="mb-6 flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-semibold"
+          <Link
+            href="/"
+            className="mb-6 inline-flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-semibold"
           >
             <span>←</span>
             <span>Back to Checker</span>
-          </button>
+          </Link>
 
           <div className="bg-white rounded-2xl shadow-xl p-8">
             <div className="flex items-center space-x-2 mb-2">
@@ -76,9 +75,9 @@ export default function FAQPage() {
                 Check your airline's official website for the most up-to-date baggage policies.
               </p>
               <a
-                href="https://flightknight.pxf.io/c/7316518/3849106/46776"
+                href={getDeepLink('/')}
                 target="_blank"
-                rel="sponsored"
+                rel="sponsored noopener noreferrer"
                 className="inline-flex items-center space-x-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
                 <span>Browse Flight Knight Products</span>

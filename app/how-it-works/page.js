@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 const steps = [
   {
@@ -30,19 +30,17 @@ const steps = [
 ]
 
 export default function HowItWorksPage() {
-  const router = useRouter()
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-3xl mx-auto">
-          <button
-            onClick={() => router.push('/')}
-            className="mb-6 flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-semibold"
+          <Link
+            href="/"
+            className="mb-6 inline-flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-semibold"
           >
             <span>←</span>
             <span>Back to Checker</span>
-          </button>
+          </Link>
 
           <div className="bg-white rounded-2xl shadow-xl p-8">
             <div className="flex items-center space-x-2 mb-2">
@@ -89,12 +87,12 @@ export default function HowItWorksPage() {
             </div>
 
             <div className="mt-8 text-center">
-              <button
-                onClick={() => router.push('/')}
-                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all"
+              <Link
+                href="/"
+                className="inline-block px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all"
               >
                 Start Checking Now →
-              </button>
+              </Link>
             </div>
           </div>
 
