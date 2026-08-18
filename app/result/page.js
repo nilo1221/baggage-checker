@@ -1,7 +1,7 @@
 'use client'
 
 import { useSearchParams, useRouter, Suspense } from 'next/navigation'
-import { ArrowLeft, ShoppingBag, Check, Globe } from 'lucide-react'
+import { ArrowLeft, ShoppingBag, Check } from 'lucide-react'
 
 function ResultContent() {
   const searchParams = useSearchParams()

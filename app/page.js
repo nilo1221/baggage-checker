@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Plane, Map, Check, Globe } from 'lucide-react'
+import { Plane, Check, Globe } from 'lucide-react'
 
 export default function Home() {
   const [airline, setAirline] = useState('')
