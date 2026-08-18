@@ -1,7 +1,6 @@
 'use client'
 
 import { useSearchParams, useRouter, Suspense } from 'next/navigation'
-import { ArrowLeft, ShoppingBag, Check } from 'lucide-react'
 
 function ResultContent() {
   const searchParams = useSearchParams()
@@ -201,7 +200,7 @@ function ResultContent() {
             onClick={() => router.push('/')}
             className="mb-6 flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-semibold"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <span>←</span>
             <span>Check Another Flight</span>
           </button>
 
@@ -217,7 +216,7 @@ function ResultContent() {
 
             <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-6 mb-6">
               <div className="text-6xl text-center mb-4 flex justify-center">
-                <ShoppingBag className="w-16 h-16 text-blue-600" />
+                <span>🎒</span>
               </div>
               <h2 className="text-2xl font-bold text-gray-800 text-center mb-2">
                 {product.name}
@@ -237,7 +236,7 @@ function ResultContent() {
               <ul className="space-y-2">
                 {product.features.map((feature, index) => (
                   <li key={index} className="flex items-center text-gray-700">
-                    <Check className="w-4 h-4 text-green-500 mr-2" />
+                    <span className="text-green-500 mr-2">✓</span>
                     {feature}
                   </li>
                 ))}

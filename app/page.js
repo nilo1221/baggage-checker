@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Plane, Check, Globe } from 'lucide-react'
 
 export default function Home() {
   const [airline, setAirline] = useState('')
@@ -59,7 +58,7 @@ export default function Home() {
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-8 pt-8">
             <div className="mb-4 flex justify-center">
-              <Plane className="w-16 h-16 text-blue-600" />
+              <span className="text-6xl">✈️</span>
             </div>
             <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent mb-4 animate-gradient">
               Baggage Checker
@@ -69,15 +68,15 @@ export default function Home() {
             </p>
             <div className="mt-6 flex justify-center space-x-4">
               <div className="flex items-center space-x-2 text-sm text-gray-500">
-                <Check className="w-4 h-4 text-green-500" />
+                <span className="text-green-500">✓</span>
                 <span>6 Airlines</span>
               </div>
               <div className="flex items-center space-x-2 text-sm text-gray-500">
-                <Check className="w-4 h-4 text-green-500" />
+                <span className="text-green-500">✓</span>
                 <span>Instant Results</span>
               </div>
               <div className="flex items-center space-x-2 text-sm text-gray-500">
-                <Check className="w-4 h-4 text-green-500" />
+                <span className="text-green-500">✓</span>
                 <span>Free to Use</span>
               </div>
             </div>
@@ -85,7 +84,7 @@ export default function Home() {
 
           <div className="bg-white rounded-2xl shadow-xl p-8 mb-6">
             <div className="flex items-center space-x-2 mb-4">
-              <Globe className="w-6 h-6 text-blue-600" />
+              <span className="text-2xl">🌍</span>
               <h2 className="text-xl font-bold text-gray-800">Airline Locations</h2>
             </div>
             <div className="relative bg-gradient-to-br from-blue-100 via-purple-50 to-blue-100 rounded-xl p-4 h-64 mb-4 overflow-hidden">

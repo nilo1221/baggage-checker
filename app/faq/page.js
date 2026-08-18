@@ -1,7 +1,6 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { ArrowLeft, HelpCircle, ExternalLink } from 'lucide-react'
 
 const faqs = [
   {
@@ -41,13 +40,13 @@ export default function FAQPage() {
             onClick={() => router.push('/')}
             className="mb-6 flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-semibold"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <span>←</span>
             <span>Back to Checker</span>
           </button>
 
           <div className="bg-white rounded-2xl shadow-xl p-8">
             <div className="flex items-center space-x-2 mb-2">
-              <HelpCircle className="w-8 h-8 text-blue-600" />
+              <span className="text-3xl">❓</span>
               <h1 className="text-3xl font-bold text-gray-800">
                 Frequently Asked Questions
               </h1>

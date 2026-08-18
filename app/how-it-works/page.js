@@ -1,32 +1,31 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { ArrowLeft, List, CheckCircle, ShoppingBag, ArrowRight } from 'lucide-react'
 
 const steps = [
   {
     number: 1,
     title: "Select Your Airline",
     description: "Choose between Ryanair or Wizz Air - the two most popular budget airlines in Europe.",
-    icon: List
+    emoji: "✈️"
   },
   {
     number: 2,
     title: "Choose Your Ticket Type",
-    description: "Select your fare type (Standard, Priority, Basic, etc.) to see exactly what baggage is included.",
-    icon: CheckCircle
+    description: "Select the type of ticket you have - Standard, Priority, or Flexi for Ryanair; Basic, WIZZ Go, or WIZZ Plus for Wizz Air.",
+    emoji: "🎫"
   },
   {
     number: 3,
     title: "Get Your Recommendation",
-    description: "We'll show you the perfect Flight Knight bag that fits your airline's requirements.",
-    icon: ShoppingBag
+    description: "We'll show you the perfect Flight Knight backpack that meets your airline's baggage requirements.",
+    emoji: "🎒"
   },
   {
     number: 4,
-    title: "Shop with Confidence",
-    description: "Click through to Flight Knight with your affiliate link and get the right bag at the best price.",
-    icon: ArrowRight
+    title: "Shop on Flight Knight",
+    description: "Click the affiliate link to purchase your recommended backpack directly from Flight Knight.",
+    emoji: "🛒"
   }
 ]
 
@@ -41,13 +40,13 @@ export default function HowItWorksPage() {
             onClick={() => router.push('/')}
             className="mb-6 flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-semibold"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <span>←</span>
             <span>Back to Checker</span>
           </button>
 
           <div className="bg-white rounded-2xl shadow-xl p-8">
             <div className="flex items-center space-x-2 mb-2">
-              <List className="w-8 h-8 text-blue-600" />
+              <span className="text-3xl">📋</span>
               <h1 className="text-3xl font-bold text-gray-800">
                 How It Works
               </h1>
@@ -64,7 +63,7 @@ export default function HowItWorksPage() {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-2">
-                      <step.icon className="w-6 h-6 text-blue-600" />
+                      <span className="text-2xl">{step.emoji}</span>
                       <h3 className="text-xl font-semibold text-gray-800">
                         {step.title}
                       </h3>
