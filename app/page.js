@@ -1,3 +1,5 @@
+import { airlines } from '../lib/airlines'
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
@@ -30,6 +32,22 @@ export default function Home() {
               <span>Free to Use</span>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="py-12 bg-white border-t border-gray-100 overflow-hidden">
+        <p className="text-center text-sm text-gray-500 uppercase tracking-wider mb-6">
+          Trusted by 6 major airlines
+        </p>
+        <div className="animate-marquee">
+          {[...airlines, ...airlines].map((air, index) => (
+            <div
+              key={`${air.id}-${index}`}
+              className={`flex-shrink-0 mx-4 px-10 py-5 rounded-2xl ${air.color} text-white font-bold text-xl shadow-lg min-w-[200px] text-center`}
+            >
+              {air.name}
+            </div>
+          ))}
         </div>
       </div>
     </div>
