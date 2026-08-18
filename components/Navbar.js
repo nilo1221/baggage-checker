@@ -35,6 +35,12 @@ export default function Navbar() {
               Home
             </a>
             <a 
+              href="/shop"
+              className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
+            >
+              Shop
+            </a>
+            <a 
               href="/how-it-works"
               className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
             >
