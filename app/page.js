@@ -1,8 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { airlines, ticketTypes } from '../lib/airlines'
+import { products } from '../lib/products'
+import { getDeepLink } from '../lib/affiliate'
 
 const AirlineLogo = ({ id }) => {
   const logos = {
@@ -61,6 +63,25 @@ export default function Home() {
 
   const selectedAirline = airlines.find((a) => a.id === airline)
   const tickets = airline ? ticketTypes[airline] : []
+
+  const recommendedProducts = useMemo(() => {
+    if (!selectedAirline || !ticketType) return []
+    const selectedTicket = tickets.find((t) => t.id === ticketType)
+    const tag = selectedTicket?.tag || ''
+    const recommended = products.filter(
+      (p) => p.airlines.includes(selectedAirline.name) || p.airlines.includes('All airlines')
+    )
+    recommended.sort((a, b) => {
+      const priority = {
+        'Free Bag': ['Backpacks', 'Cabin Cases', 'Checked Cases', 'Suitcase Sets'],
+        'Cabin Bag': ['Cabin Cases', 'Backpacks', 'Suitcase Sets', 'Checked Cases'],
+        'All Included': ['Suitcase Sets', 'Cabin Cases', 'Checked Cases', 'Backpacks']
+      }
+      const order = priority[tag] || priority['Cabin Bag']
+      return order.indexOf(a.category) - order.indexOf(b.category)
+    })
+    return recommended
+  }, [selectedAirline, ticketType, tickets])
 
   const handleAirlineSelect = (id) => {
     setAirline(id)
@@ -227,22 +248,40 @@ export default function Home() {
 
               {step === 3 && (
                 <div className="text-center">
-                  <h3 className="text-2xl font-bold text-white mb-2">Ready to find your bag</h3>
-                  <p className="text-blue-200 mb-8">
+                  <h3 className="text-2xl font-bold text-white mb-2">Recommended for your trip</h3>
+                  <p className="text-blue-200 mb-2">
                     {selectedAirline?.name} — {tickets.find((t) => t.id === ticketType)?.name}
                   </p>
-                  <div className="bg-white/5 rounded-2xl p-6 mb-8 border border-white/10">
-                    <div className="text-5xl mb-4">🎒</div>
-                    <p className="text-white text-lg">
-                      We will recommend the perfect size based on your selection.
-                    </p>
+                  <p className="text-blue-300 text-sm mb-6">
+                    Swipe or hover to pause — click any bag to buy on Flight Knight
+                  </p>
+
+                  <div className="relative carousel-fade rounded-2xl overflow-hidden mb-8 border border-white/10">
+                    <div className="animate-marquee">
+                      {[...recommendedProducts, ...recommendedProducts, ...recommendedProducts].map((product, index) => (
+                        <a
+                          key={`${product.id}-${index}`}
+                          href={getDeepLink(product.path)}
+                          target="_blank"
+                          rel="sponsored noopener noreferrer"
+                          className="flex-shrink-0 mx-3 px-5 py-5 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/10 shadow-lg min-w-[220px] w-[220px] text-center transform transition-all hover:-translate-y-2 hover:bg-white/20 group"
+                        >
+                          <div className="text-5xl mb-3 group-hover:scale-110 transition-transform">{product.emoji}</div>
+                          <div className="text-white font-bold text-lg leading-tight mb-1">{product.name}</div>
+                          <div className="text-blue-200 text-sm mb-2">{product.tagline}</div>
+                          <div className="text-white text-xl font-bold mb-1">{product.price}</div>
+                          <div className="text-xs text-blue-300">Buy on Flight Knight →</div>
+                        </a>
+                      ))}
+                    </div>
                   </div>
+
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                     <button
                       onClick={handleCheck}
                       className="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-bold text-lg hover:from-blue-600 hover:to-purple-600 transition-all shadow-lg"
                     >
-                      Find My Baggage
+                      View Full Result
                     </button>
                     <button
                       onClick={reset}
