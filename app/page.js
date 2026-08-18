@@ -88,36 +88,57 @@ export default function Home() {
               <Globe className="w-6 h-6 text-blue-600" />
               <h2 className="text-xl font-bold text-gray-800">Airline Locations</h2>
             </div>
-            <div className="relative bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl p-4 h-48 mb-4">
+            <div className="relative bg-gradient-to-br from-blue-100 via-purple-50 to-blue-100 rounded-xl p-4 h-64 mb-4 overflow-hidden">
+              {/* Europe outline SVG */}
+              <svg viewBox="0 0 400 300" className="w-full h-full opacity-20">
+                <path d="M50,80 Q80,60 120,70 T180,65 T240,70 T300,80 T350,90" stroke="#3b82f6" strokeWidth="2" fill="none"/>
+                <path d="M60,100 Q100,90 150,95 T220,90 T280,95 T340,100" stroke="#8b5cf6" strokeWidth="2" fill="none"/>
+                <path d="M70,130 Q110,120 160,125 T230,120 T290,125 T350,130" stroke="#3b82f6" strokeWidth="2" fill="none"/>
+              </svg>
+              
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="relative w-full h-full">
-                  {/* Simplified Europe map representation */}
-                  <div className="absolute text-6xl" style={{ top: '20%', left: '20%' }}>🇮🇪</div>
-                  <div className="absolute text-6xl" style={{ top: '40%', left: '55%' }}>🇭🇺</div>
-                  <div className="absolute text-6xl" style={{ top: '30%', left: '45%' }}>🇬🇧</div>
-                  <div className="absolute text-6xl" style={{ top: '35%', left: '50%' }}>🇫🇷</div>
-                  <div className="absolute text-6xl" style={{ top: '25%', left: '52%' }}>🇳🇱</div>
+                  {/* Country labels with better positioning */}
+                  <div className="absolute text-lg font-bold text-gray-400" style={{ top: '15%', left: '15%' }}>Ireland</div>
+                  <div className="absolute text-lg font-bold text-gray-400" style={{ top: '45%', left: '60%' }}>Hungary</div>
+                  <div className="absolute text-lg font-bold text-gray-400" style={{ top: '35%', left: '40%' }}>UK</div>
+                  <div className="absolute text-lg font-bold text-gray-400" style={{ top: '40%', left: '50%' }}>France</div>
+                  <div className="absolute text-lg font-bold text-gray-400" style={{ top: '20%', left: '55%' }}>Netherlands</div>
                   
-                  {/* Airline markers */}
+                  {/* Airline markers with pulse animation */}
                   {airlines.map((air) => (
                     <div
                       key={air.id}
-                      className={`absolute w-4 h-4 rounded-full ${air.color} border-2 border-white shadow-lg cursor-pointer transition-transform hover:scale-125`}
+                      className="absolute group cursor-pointer"
                       style={{
                         top: `${((90 - air.lat) / 90) * 100}%`,
-                        left: `${((air.lng + 180) / 360) * 100}%`
+                        left: `${((air.lng + 180) / 360) * 100}%`,
+                        transform: 'translate(-50%, -50%)'
                       }}
-                      title={`${air.name} - ${air.country}`}
-                    />
+                    >
+                      {/* Pulse effect */}
+                      <div className={`absolute inset-0 rounded-full ${air.color} opacity-30 animate-ping`}></div>
+                      {/* Main marker */}
+                      <div className={`relative w-6 h-6 rounded-full ${air.color} border-3 border-white shadow-lg transition-transform group-hover:scale-125 flex items-center justify-center`}>
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      </div>
+                      {/* Tooltip */}
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                        {air.name} - {air.country}
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {airlines.map((air) => (
-                <div key={air.id} className="flex items-center space-x-2">
-                  <div className={`w-3 h-3 rounded-full ${air.color}`}></div>
-                  <span className="text-gray-700">{air.name} ({air.country})</span>
+                <div key={air.id} className="flex items-center space-x-2 p-2 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                  <div className={`w-4 h-4 rounded-full ${air.color} shadow-md`}></div>
+                  <div>
+                    <span className="text-gray-800 font-medium text-sm">{air.name}</span>
+                    <span className="text-gray-500 text-xs block">{air.country}</span>
+                  </div>
                 </div>
               ))}
             </div>
