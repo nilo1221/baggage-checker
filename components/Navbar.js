@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { AirplaneIcon } from './Icons'
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -22,8 +23,8 @@ export default function Navbar() {
             href="/"
             className="flex items-center space-x-2 cursor-pointer"
           >
-            <span className="text-2xl">✈️</span>
-            <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <AirplaneIcon className="w-7 h-7 text-blue-600" />
+            <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-sky-500 bg-clip-text text-transparent">
               Pack & Fly
             </span>
           </Link>
@@ -45,7 +46,7 @@ export default function Navbar() {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
-            {mobileMenuOpen ? '✕' : '☰'}
+            {mobileMenuOpen ? 'Close' : 'Menu'}
           </button>
         </div>
 

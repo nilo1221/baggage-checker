@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { AirplaneIcon, CheckIcon, MapIcon, SuitcaseIcon } from './Icons'
 
 const footerLinks = {
   shop: [
@@ -25,7 +26,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 mb-10">
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center space-x-2 mb-4">
-              <span className="text-2xl">✈️</span>
+              <AirplaneIcon className="w-7 h-7 text-blue-400" />
               <span className="text-xl font-bold text-white">
                 Pack & Fly
               </span>
@@ -35,14 +36,14 @@ export default function Footer() {
             </p>
 
             <div className="flex flex-wrap gap-3">
-              <span className="inline-flex items-center px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-gray-300">
-                ✓ Airline Compliant
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-gray-300">
+                <CheckIcon className="w-3 h-3 text-emerald-400" /> Airline Compliant
               </span>
-              <span className="inline-flex items-center px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-gray-300">
-                ✓ Free Comparison
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-gray-300">
+                <CheckIcon className="w-3 h-3 text-emerald-400" /> Free Comparison
               </span>
-              <span className="inline-flex items-center px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-gray-300">
-                ✓ Affiliate Deals
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-gray-300">
+                <CheckIcon className="w-3 h-3 text-emerald-400" /> Affiliate Deals
               </span>
             </div>
           </div>
@@ -106,9 +107,13 @@ export default function Footer() {
             <p className="text-sm text-gray-500 text-center">
               Powered by Flight Knight — Affiliate links used throughout the site.
             </p>
-            <div className="flex justify-center lg:justify-end space-x-4 text-sm text-gray-500">
-              <span>🗺 OpenStreetMap</span>
-              <span>🛍️ Flight Knight</span>
+            <div className="flex justify-center lg:justify-end items-center space-x-4 text-sm text-gray-500">
+              <span className="inline-flex items-center gap-1.5">
+                <MapIcon className="w-4 h-4" /> OpenStreetMap
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <SuitcaseIcon className="w-4 h-4" /> Flight Knight
+              </span>
             </div>
           </div>
         </div>

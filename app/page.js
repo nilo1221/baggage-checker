@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import { airlines, ticketTypes } from '../lib/airlines'
 import { products } from '../lib/products'
 import { getDeepLink } from '../lib/affiliate'
+import Button from '../components/Button'
+import { AirplaneIcon, CheckIcon, ProductIcon, ArrowLeftIcon } from '../components/Icons'
 
 const AirlineLogo = ({ id }) => {
   const logos = {
@@ -117,7 +119,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-br from-sky-950/85 via-sky-900/70 to-sky-950/85"></div>
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-sky-900/60 to-transparent"></div>
         <div className="relative z-10 text-center px-6">
-          <span className="text-7xl mb-6 block">✈️</span>
+          <AirplaneIcon className="w-24 h-24 mx-auto mb-6 text-white/90" />
           <h1 className="text-6xl md:text-8xl font-bold text-white mb-6 drop-shadow-2xl">
             Pack & Fly
           </h1>
@@ -126,15 +128,15 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap justify-center gap-4 text-sm">
             <div className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full">
-              <span>✓</span>
+              <CheckIcon className="w-4 h-4" />
               <span>6 Airlines</span>
             </div>
             <div className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full">
-              <span>✓</span>
+              <CheckIcon className="w-4 h-4" />
               <span>Instant Results</span>
             </div>
             <div className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full">
-              <span>✓</span>
+              <CheckIcon className="w-4 h-4" />
               <span>Free to Use</span>
             </div>
           </div>
@@ -240,9 +242,9 @@ export default function Home() {
                     ))}
                   </div>
                   <div className="mt-6 text-center">
-                    <button onClick={reset} className="text-blue-300 hover:text-white font-medium transition-colors">
-                      ← Change airline
-                    </button>
+                    <Button onClick={reset} variant="ghost" className="inline-flex items-center gap-2 text-blue-300 hover:text-white">
+                      <ArrowLeftIcon className="w-4 h-4" /> Change airline
+                    </Button>
                   </div>
                 </div>
               )}
@@ -267,7 +269,9 @@ export default function Home() {
                           rel="sponsored noopener noreferrer"
                           className="flex-shrink-0 mx-3 px-5 py-5 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/10 shadow-lg min-w-[220px] w-[220px] text-center transform transition-all hover:-translate-y-2 hover:bg-white/20 group"
                         >
-                          <div className="text-5xl mb-3 group-hover:scale-110 transition-transform">{product.emoji}</div>
+                          <div className="mb-3 flex justify-center group-hover:scale-110 transition-transform">
+                            <ProductIcon category={product.category} className="w-14 h-14 text-blue-200" />
+                          </div>
                           <div className="text-white font-bold text-lg leading-tight mb-1">{product.name}</div>
                           <div className="text-blue-200 text-sm mb-2">{product.tagline}</div>
                           <div className="text-white text-xl font-bold mb-1">{product.price}</div>
@@ -278,18 +282,12 @@ export default function Home() {
                   </div>
 
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <button
-                      onClick={handleCheck}
-                      className="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-bold text-lg hover:from-blue-600 hover:to-purple-600 transition-all shadow-lg"
-                    >
+                    <Button onClick={handleCheck} className="w-full sm:w-auto text-lg">
                       View Full Result
-                    </button>
-                    <button
-                      onClick={reset}
-                      className="w-full sm:w-auto px-10 py-4 border-2 border-white/20 text-white rounded-xl font-bold hover:border-white/40 transition-all"
-                    >
+                    </Button>
+                    <Button onClick={reset} variant="secondary" className="w-full sm:w-auto text-lg">
                       Start Over
-                    </button>
+                    </Button>
                   </div>
                 </div>
               )}

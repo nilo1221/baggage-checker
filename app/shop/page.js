@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { getDeepLink } from '../../lib/affiliate'
 import { products, categories } from '../../lib/products'
 import { airlines } from '../../lib/airlines'
+import Button from '../../components/Button'
+import { SuitcaseIcon, ProductIcon, ArrowLeftIcon, CheckIcon } from '../../components/Icons'
 
 export default function ShopPage() {
   const [selectedCategory, setSelectedCategory] = useState('All')
@@ -25,16 +27,12 @@ export default function ShopPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
-          <Link
-            href="/"
-            className="mb-6 inline-flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-semibold transition-colors"
-          >
-            <span>←</span>
-            <span>Back to Checker</span>
-          </Link>
+          <Button href="/" variant="ghost" className="mb-6 inline-flex items-center gap-2 text-blue-600 hover:text-blue-800">
+            <ArrowLeftIcon className="w-4 h-4" /> Back to Checker
+          </Button>
 
           <div className="text-center mb-10">
-            <span className="text-5xl mb-4 block">🛍️</span>
+            <SuitcaseIcon className="w-14 h-14 mx-auto mb-4 text-blue-600" />
             <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-3">
               Flight Knight Shop
             </h1>
@@ -66,7 +64,7 @@ export default function ShopPage() {
                 href={getDeepLink(product.path)}
                 target="_blank"
                 rel="sponsored noopener noreferrer"
-                className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden border border-gray-100"
+                className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden border border-gray-100"
               >
                 <div className="relative h-52 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
                   {product.badge && (
@@ -74,9 +72,10 @@ export default function ShopPage() {
                       {product.badge}
                     </span>
                   )}
-                  <span className="text-7xl group-hover:scale-110 transition-transform duration-300">
-                    {product.emoji}
-                  </span>
+                  <ProductIcon
+                    category={product.category}
+                    className="w-20 h-20 text-blue-600 group-hover:scale-110 transition-transform duration-300"
+                  />
                 </div>
 
                 <div className="p-6">
@@ -121,18 +120,18 @@ export default function ShopPage() {
           </div>
 
           <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-            <div className="bg-white rounded-xl p-5 shadow-md border border-gray-100">
-              <span className="text-2xl mb-2 block">🚚</span>
+            <div className="bg-white rounded-2xl p-5 shadow-lg border border-gray-100">
+              <CheckIcon className="w-6 h-6 mb-2 text-blue-600" />
               <h4 className="font-semibold text-gray-800">Free Same Day Dispatch</h4>
               <p className="text-sm text-gray-500">On orders placed before 3pm</p>
             </div>
-            <div className="bg-white rounded-xl p-5 shadow-md border border-gray-100">
-              <span className="text-2xl mb-2 block">💰</span>
+            <div className="bg-white rounded-2xl p-5 shadow-lg border border-gray-100">
+              <CheckIcon className="w-6 h-6 mb-2 text-blue-600" />
               <h4 className="font-semibold text-gray-800">Stock Up & Save</h4>
               <p className="text-sm text-gray-500">10% off 2+ items, 15% off 3+</p>
             </div>
-            <div className="bg-white rounded-xl p-5 shadow-md border border-gray-100">
-              <span className="text-2xl mb-2 block">💳</span>
+            <div className="bg-white rounded-2xl p-5 shadow-lg border border-gray-100">
+              <CheckIcon className="w-6 h-6 mb-2 text-blue-600" />
               <h4 className="font-semibold text-gray-800">Buy Now, Pay Later</h4>
               <p className="text-sm text-gray-500">Klarna available at checkout</p>
             </div>

@@ -4,6 +4,8 @@ import { Suspense } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { getDeepLink, TRACKING_PIXEL } from '../../lib/affiliate'
+import Button from '../../components/Button'
+import { ProductIcon, CheckIcon, ArrowLeftIcon } from '../../components/Icons'
 
 function ResultContent() {
   const searchParams = useSearchParams()
@@ -208,13 +210,9 @@ function ResultContent() {
       
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
-          <Link
-            href="/"
-            className="mb-6 inline-flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-semibold"
-          >
-            <span>←</span>
-            <span>Check Another Flight</span>
-          </Link>
+          <Button href="/" variant="ghost" className="mb-6 inline-flex items-center gap-2 text-blue-600 hover:text-blue-800">
+            <ArrowLeftIcon className="w-4 h-4" /> Check Another Flight
+          </Button>
 
           <div className="bg-white rounded-2xl shadow-xl p-8">
             <div className="text-center mb-6">
@@ -227,8 +225,8 @@ function ResultContent() {
             </div>
 
             <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-6 mb-6">
-              <div className="text-6xl text-center mb-4 flex justify-center">
-                <span>🎒</span>
+              <div className="text-center mb-4 flex justify-center">
+                <ProductIcon category={product.category} className="w-20 h-20 text-blue-600" />
               </div>
               <h2 className="text-2xl font-bold text-gray-800 text-center mb-2">
                 {product.name}
@@ -248,21 +246,21 @@ function ResultContent() {
               <ul className="space-y-2">
                 {product.features.map((feature, index) => (
                   <li key={index} className="flex items-center text-gray-700">
-                    <span className="text-green-500 mr-2">✓</span>
+                    <CheckIcon className="w-5 h-5 text-emerald-500 mr-2" />
                     {feature}
                   </li>
                 ))}
               </ul>
             </div>
 
-            <a
+            <Button
               href={getDeepLink(`/collections/${product.category}`)}
               target="_blank"
               rel="sponsored noopener noreferrer"
-              className="block w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all"
+              className="w-full text-lg"
             >
               Shop {product.name} on Flight Knight →
-            </a>
+            </Button>
 
             <p className="mt-4 text-xs text-gray-500 text-center">
               Affiliate link - You support us at no extra cost

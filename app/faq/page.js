@@ -2,6 +2,8 @@
 
 import Link from 'next/link'
 import { getDeepLink } from '../../lib/affiliate'
+import Button from '../../components/Button'
+import { QuestionIcon, ArrowLeftIcon, ArrowRightIcon } from '../../components/Icons'
 
 const faqs = [
   {
@@ -35,17 +37,13 @@ export default function FAQPage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-3xl mx-auto">
-          <Link
-            href="/"
-            className="mb-6 inline-flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-semibold"
-          >
-            <span>←</span>
-            <span>Back to Checker</span>
-          </Link>
+          <Button href="/" variant="ghost" className="mb-6 inline-flex items-center gap-2 text-blue-600 hover:text-blue-800">
+            <ArrowLeftIcon className="w-4 h-4" /> Back to Checker
+          </Button>
 
           <div className="bg-white rounded-2xl shadow-xl p-8">
             <div className="flex items-center space-x-2 mb-2">
-              <span className="text-3xl">❓</span>
+              <QuestionIcon className="w-9 h-9 text-blue-600" />
               <h1 className="text-3xl font-bold text-gray-800">
                 Frequently Asked Questions
               </h1>
@@ -74,15 +72,15 @@ export default function FAQPage() {
               <p className="text-gray-600 mb-4">
                 Check your airline's official website for the most up-to-date baggage policies.
               </p>
-              <a
+              <Button
                 href={getDeepLink('/')}
                 target="_blank"
                 rel="sponsored noopener noreferrer"
-                className="inline-flex items-center space-x-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="inline-flex items-center gap-2"
               >
                 <span>Browse Flight Knight Products</span>
-                <span>↗</span>
-              </a>
+                <ArrowRightIcon className="w-4 h-4" />
+              </Button>
             </div>
           </div>
 
