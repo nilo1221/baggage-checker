@@ -43,3 +43,28 @@ body {
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+
+.carousel-fade {
+  position: relative;
+}
+
+.carousel-fade::before,
+.carousel-fade::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.carousel-fade::before {
+  left: 0;
+  background: linear-gradient(to right, #0f172a, transparent);
+}
+
+.carousel-fade::after {
+  right: 0;
+  background: linear-gradient(to left, #0f172a, transparent);
+}
