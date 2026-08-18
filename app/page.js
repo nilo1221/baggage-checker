@@ -56,28 +56,34 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-8 pt-8">
-            <div className="mb-4 flex justify-center">
-              <span className="text-6xl">✈️</span>
-            </div>
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent mb-4 animate-gradient">
-              Baggage Checker
-            </h1>
-            <p className="text-xl text-gray-600 max-w-lg mx-auto">
-              Find the perfect Flight Knight baggage for your flight in seconds
-            </p>
-            <div className="mt-6 flex justify-center space-x-4">
-              <div className="flex items-center space-x-2 text-sm text-gray-500">
-                <span className="text-green-500">✓</span>
-                <span>6 Airlines</span>
-              </div>
-              <div className="flex items-center space-x-2 text-sm text-gray-500">
-                <span className="text-green-500">✓</span>
-                <span>Instant Results</span>
-              </div>
-              <div className="flex items-center space-x-2 text-sm text-gray-500">
-                <span className="text-green-500">✓</span>
-                <span>Free to Use</span>
+          <div className="relative rounded-3xl overflow-hidden mb-8 min-h-[420px] flex items-center justify-center text-center shadow-2xl">
+            <img
+              src="/hero-airplane.jpg"
+              alt="Airplane taking off"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-purple-900/70 to-blue-900/80"></div>
+            <div className="relative z-10 px-6 py-12">
+              <span className="text-6xl mb-4 block">✈️</span>
+              <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
+                Baggage Checker
+              </h1>
+              <p className="text-xl md:text-2xl text-blue-100 max-w-2xl mx-auto mb-6">
+                Find the perfect Flight Knight luggage for your flight in seconds
+              </p>
+              <div className="flex flex-wrap justify-center gap-4 text-sm">
+                <div className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full">
+                  <span className="text-green-400">✓</span>
+                  <span>6 Airlines</span>
+                </div>
+                <div className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full">
+                  <span className="text-green-400">✓</span>
+                  <span>Instant Results</span>
+                </div>
+                <div className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full">
+                  <span className="text-green-400">✓</span>
+                  <span>Free to Use</span>
+                </div>
               </div>
             </div>
           </div>
