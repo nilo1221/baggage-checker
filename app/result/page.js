@@ -17,7 +17,7 @@ function ResultContent() {
         name: '40x20x25cm Travel Backpack',
         description: 'Perfect for Ryanair Standard (free personal bag)',
         features: ['Fits under seat', 'Free with Standard ticket', 'Lightweight & durable'],
-        price: '£24.99',
+        price: '€24.99',
         image: '🎒',
         category: 'backpacks'
       },
@@ -25,7 +25,7 @@ function ResultContent() {
         name: '40x30x20cm Travel Backpack',
         description: 'Ideal for Ryanair Priority (cabin bag)',
         features: ['Overhead locker size', 'Priority boarding required', 'Laptop compartment'],
-        price: '£24.99',
+        price: '€24.99',
         image: '🎒',
         category: 'cabin-cases'
       },
@@ -33,7 +33,7 @@ function ResultContent() {
         name: '55x40x20cm Travel Backpack',
         description: 'Maximum size for Ryanair Flexi Plus',
         features: ['Largest cabin size', 'All baggage included', 'Premium features'],
-        price: '£24.99',
+        price: '€24.99',
         image: '🎒',
         category: 'cabin-cases'
       }
@@ -43,7 +43,7 @@ function ResultContent() {
         name: '40x30x20cm Travel Backpack',
         description: 'Perfect for Wizz Air Basic (free personal bag)',
         features: ['Fits under seat', 'Free with Basic ticket', 'Lightweight & durable'],
-        price: '£24.99',
+        price: '€24.99',
         image: '🎒',
         category: 'backpacks'
       },
@@ -51,7 +51,7 @@ function ResultContent() {
         name: '55x40x20cm Travel Backpack',
         description: 'Ideal for Wizz Air WIZZ Go (cabin bag)',
         features: ['Overhead locker size', 'WIZZ Go fare required', 'Laptop compartment'],
-        price: '£24.99',
+        price: '€24.99',
         image: '🎒',
         category: 'cabin-cases'
       },
@@ -59,7 +59,7 @@ function ResultContent() {
         name: '55x40x20cm Travel Backpack',
         description: 'Maximum size for Wizz Air WIZZ Plus',
         features: ['Largest cabin size', 'All baggage included', 'Premium features'],
-        price: '£24.99',
+        price: '€24.99',
         image: '🎒',
         category: 'cabin-cases'
       }
@@ -69,7 +69,7 @@ function ResultContent() {
         name: '45x36x20cm Travel Backpack',
         description: 'Perfect for easyJet Standard (free cabin bag)',
         features: ['Overhead locker size', 'Free with Standard ticket', 'Laptop compartment'],
-        price: '£24.99',
+        price: '€24.99',
         image: '🎒',
         category: 'cabin-cases'
       },
@@ -77,7 +77,7 @@ function ResultContent() {
         name: '55x40x20cm Travel Backpack',
         description: 'Maximum size for easyJet Flexi',
         features: ['Largest cabin size', 'All baggage included', 'Premium features'],
-        price: '£24.99',
+        price: '€24.99',
         image: '🎒',
         category: 'cabin-cases'
       }
@@ -87,7 +87,7 @@ function ResultContent() {
         name: '55x40x20cm Travel Backpack',
         description: 'Perfect for British Airways Economy',
         features: ['Overhead locker size', 'Fits BA requirements', 'Laptop compartment'],
-        price: '£24.99',
+        price: '€24.99',
         image: '🎒',
         category: 'cabin-cases'
       },
@@ -95,7 +95,7 @@ function ResultContent() {
         name: '55x40x20cm Travel Backpack',
         description: 'Premium choice for British Airways Business',
         features: ['Largest cabin size', 'Premium features', 'Business travel ready'],
-        price: '£24.99',
+        price: '€24.99',
         image: '🎒',
         category: 'cabin-cases'
       }
@@ -105,7 +105,7 @@ function ResultContent() {
         name: '55x35x25cm Travel Backpack',
         description: 'Perfect for Air France Economy',
         features: ['Fits AF maximum dimensions', 'Overhead locker size', 'Laptop compartment'],
-        price: '£24.99',
+        price: '€24.99',
         image: '🎒',
         category: 'cabin-cases'
       },
@@ -113,7 +113,7 @@ function ResultContent() {
         name: '55x35x25cm Travel Backpack',
         description: 'Premium choice for Air France Business',
         features: ['Fits AF maximum dimensions', 'Premium features', 'Business travel ready'],
-        price: '£24.99',
+        price: '€24.99',
         image: '🎒',
         category: 'cabin-cases'
       }
@@ -123,7 +123,7 @@ function ResultContent() {
         name: '55x35x25cm Travel Backpack',
         description: 'Perfect for KLM Economy',
         features: ['Fits KLM maximum dimensions', 'Overhead locker size', 'Laptop compartment'],
-        price: '£24.99',
+        price: '€24.99',
         image: '🎒',
         category: 'cabin-cases'
       },
@@ -131,7 +131,7 @@ function ResultContent() {
         name: '55x35x25cm Travel Backpack',
         description: 'Premium choice for KLM Business',
         features: ['Fits KLM maximum dimensions', 'Premium features', 'Business travel ready'],
-        price: '£24.99',
+        price: '€24.99',
         image: '🎒',
         category: 'cabin-cases'
       }
