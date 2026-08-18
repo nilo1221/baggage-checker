@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { Plane, Map, Check, Globe } from 'lucide-react'
 
 export default function Home() {
   const [airline, setAirline] = useState('')
@@ -56,17 +57,37 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-800 mb-2">
-              ✈️ Baggage Checker
+          <div className="text-center mb-8 pt-8">
+            <div className="mb-4 flex justify-center">
+              <Plane className="w-16 h-16 text-blue-600" />
+            </div>
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent mb-4 animate-gradient">
+              Baggage Checker
             </h1>
-            <p className="text-gray-600">
-              Find the perfect Flight Knight baggage for your flight
+            <p className="text-xl text-gray-600 max-w-lg mx-auto">
+              Find the perfect Flight Knight baggage for your flight in seconds
             </p>
+            <div className="mt-6 flex justify-center space-x-4">
+              <div className="flex items-center space-x-2 text-sm text-gray-500">
+                <Check className="w-4 h-4 text-green-500" />
+                <span>6 Airlines</span>
+              </div>
+              <div className="flex items-center space-x-2 text-sm text-gray-500">
+                <Check className="w-4 h-4 text-green-500" />
+                <span>Instant Results</span>
+              </div>
+              <div className="flex items-center space-x-2 text-sm text-gray-500">
+                <Check className="w-4 h-4 text-green-500" />
+                <span>Free to Use</span>
+              </div>
+            </div>
           </div>
 
           <div className="bg-white rounded-2xl shadow-xl p-8 mb-6">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">🌍 Airline Locations</h2>
+            <div className="flex items-center space-x-2 mb-4">
+              <Globe className="w-6 h-6 text-blue-600" />
+              <h2 className="text-xl font-bold text-gray-800">Airline Locations</h2>
+            </div>
             <div className="relative bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl p-4 h-48 mb-4">
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="relative w-full h-full">

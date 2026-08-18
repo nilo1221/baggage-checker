@@ -1,31 +1,32 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import { ArrowLeft, List, CheckCircle, ShoppingBag, ArrowRight } from 'lucide-react'
 
 const steps = [
   {
     number: 1,
     title: "Select Your Airline",
     description: "Choose between Ryanair or Wizz Air - the two most popular budget airlines in Europe.",
-    icon: "✈️"
+    icon: List
   },
   {
     number: 2,
     title: "Choose Your Ticket Type",
     description: "Select your fare type (Standard, Priority, Basic, etc.) to see exactly what baggage is included.",
-    icon: "🎫"
+    icon: CheckCircle
   },
   {
     number: 3,
     title: "Get Your Recommendation",
     description: "We'll show you the perfect Flight Knight bag that fits your airline's requirements.",
-    icon: "🎒"
+    icon: ShoppingBag
   },
   {
     number: 4,
     title: "Shop with Confidence",
     description: "Click through to Flight Knight with your affiliate link and get the right bag at the best price.",
-    icon: "🛒"
+    icon: ArrowRight
   }
 ]
 
@@ -38,15 +39,19 @@ export default function HowItWorksPage() {
         <div className="max-w-3xl mx-auto">
           <button
             onClick={() => router.push('/')}
-            className="mb-6 text-blue-600 hover:text-blue-800 font-semibold"
+            className="mb-6 flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-semibold"
           >
-            ← Back to Checker
+            <ArrowLeft className="w-4 h-4" />
+            <span>Back to Checker</span>
           </button>
 
           <div className="bg-white rounded-2xl shadow-xl p-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">
-              📋 How It Works
-            </h1>
+            <div className="flex items-center space-x-2 mb-2">
+              <List className="w-8 h-8 text-blue-600" />
+              <h1 className="text-3xl font-bold text-gray-800">
+                How It Works
+              </h1>
+            </div>
             <p className="text-gray-600 mb-8">
               Find the perfect baggage for your flight in 4 simple steps
             </p>
@@ -59,7 +64,7 @@ export default function HowItWorksPage() {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-2">
-                      <span className="text-2xl">{step.icon}</span>
+                      <step.icon className="w-6 h-6 text-blue-600" />
                       <h3 className="text-xl font-semibold text-gray-800">
                         {step.title}
                       </h3>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import { ArrowLeft, HelpCircle, ExternalLink } from 'lucide-react'
 
 const faqs = [
   {
@@ -38,15 +39,19 @@ export default function FAQPage() {
         <div className="max-w-3xl mx-auto">
           <button
             onClick={() => router.push('/')}
-            className="mb-6 text-blue-600 hover:text-blue-800 font-semibold"
+            className="mb-6 flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-semibold"
           >
-            ← Back to Checker
+            <ArrowLeft className="w-4 h-4" />
+            <span>Back to Checker</span>
           </button>
 
           <div className="bg-white rounded-2xl shadow-xl p-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">
-              ❓ Frequently Asked Questions
-            </h1>
+            <div className="flex items-center space-x-2 mb-2">
+              <HelpCircle className="w-8 h-8 text-blue-600" />
+              <h1 className="text-3xl font-bold text-gray-800">
+                Frequently Asked Questions
+              </h1>
+            </div>
             <p className="text-gray-600 mb-8">
               Common questions about airline baggage policies and Flight Knight products
             </p>
@@ -75,9 +80,10 @@ export default function FAQPage() {
                 href="https://flightknight.pxf.io/c/7316518/3849106/46776"
                 target="_blank"
                 rel="sponsored"
-                className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="inline-flex items-center space-x-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
-                Browse Flight Knight Products
+                <span>Browse Flight Knight Products</span>
+                <ExternalLink className="w-4 h-4" />
               </a>
             </div>
           </div>
