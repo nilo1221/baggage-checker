@@ -15,7 +15,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/25 backdrop-blur-xl border-b border-white/30 shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Link
@@ -33,7 +33,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
+                className="text-gray-900/80 hover:text-blue-600 font-medium transition-colors"
               >
                 {link.label}
               </Link>
@@ -41,7 +41,7 @@ export default function Navbar() {
           </div>
 
           <button
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100 text-2xl"
+            className="md:hidden p-2 rounded-lg bg-white/30 hover:bg-white/50 backdrop-blur-md text-2xl"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -50,12 +50,12 @@ export default function Navbar() {
         </div>
 
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-100 py-4 space-y-2">
+          <div className="md:hidden border-t border-white/20 bg-white/85 backdrop-blur-2xl py-4 space-y-2 shadow-2xl">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="block px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg font-medium"
+                className="block px-4 py-2 text-gray-900/80 hover:text-blue-600 hover:bg-white/50 rounded-lg font-medium"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {link.label}
