@@ -4,8 +4,46 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
 export const metadata = {
-  title: 'Pack & Fly - Airline Cabin Bag Finder',
-  description: 'Find the perfect Flight Knight luggage for your flight. Compare airline baggage rules in seconds.',
+  metadataBase: new URL(
+    process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : 'https://packandfly.vercel.app'
+  ),
+  title: {
+    default: 'Pack & Fly - Airline Cabin Bag Finder',
+    template: '%s | Pack & Fly',
+  },
+  description:
+    'Find the perfect Flight Knight luggage for your flight. Compare airline baggage rules and book hotels in seconds.',
+  keywords: [
+    'cabin bag',
+    'airline luggage',
+    'Flight Knight',
+    'Ryanair bag',
+    'Wizz Air bag',
+    'travel backpack',
+    'hand luggage',
+    'cabin baggage allowance',
+  ],
+  openGraph: {
+    title: 'Pack & Fly - Airline Cabin Bag Finder',
+    description:
+      'Find the perfect Flight Knight luggage for your flight. Compare airline baggage rules and book hotels in seconds.',
+    url: '/',
+    siteName: 'Pack & Fly',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Pack & Fly - Airline Cabin Bag Finder',
+    description:
+      'Find the perfect Flight Knight luggage for your flight. Compare airline baggage rules and book hotels in seconds.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 }
 
 export default function RootLayout({ children }) {
