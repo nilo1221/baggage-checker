@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { divIcon } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import { MapIcon } from './Icons'
 
 const priceIcon = (price) =>
   divIcon({
@@ -47,7 +48,7 @@ export default function DestinationsMap({ destinations, getHotelLink }) {
           <Popup>
             <div className="text-gray-900 min-w-[180px]">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-2xl">{dest.emoji}</span>
+                <MapIcon className="w-6 h-6 text-blue-600" />
                 <h3 className="font-bold text-lg">{dest.name}</h3>
               </div>
               <p className="text-sm text-gray-600 mb-1">{dest.country}</p>
