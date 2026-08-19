@@ -113,14 +113,27 @@ export default function DestinationsPage() {
     if (!params) return { suggested: [], alternatives: [], featured: [], whyText: '', hasQuery: false }
     const hasQuery = !!(params.vibe || params.budget || params.amenities.length || params.location)
 
-    let all = [...destinations]
-    if (params.vibe) all = all.filter((d) => d.vibe === params.vibe)
-    if (params.budget) all = all.filter((d) => d.price <= Number(params.budget))
+    const q = params.location.trim().toLowerCase()
+    const nameMatches = q
+      ? destinations.filter(
+          (d) =>
+            d.name.toLowerCase().includes(q) ||
+            d.country.toLowerCase().includes(q) ||
+            q.includes(d.name.toLowerCase())
+        )
+      : []
+
+    let filtered = [...destinations]
+    if (params.vibe) filtered = filtered.filter((d) => d.vibe === params.vibe)
+    if (params.budget) filtered = filtered.filter((d) => d.price <= Number(params.budget))
     if (params.amenities.length) {
       const wanted = params.amenities.map((c) => codeToAmenity[c]).filter(Boolean)
-      if (wanted.length) all = all.filter((d) => wanted.every((a) => d.amenities.includes(a)))
+      if (wanted.length) filtered = filtered.filter((d) => wanted.every((a) => d.amenities.includes(a)))
     }
-    const suggested = all.length ? all : destinations
+
+    const suggested = nameMatches.length || filtered.length
+      ? [...new Map([...nameMatches, ...filtered].map((d) => [d.id, d])).values()]
+      : destinations
 
     const budgetNumber = params.budget ? Number(params.budget) : Infinity
     const alternatives = destinations
