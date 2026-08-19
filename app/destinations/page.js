@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react'
 import dynamic from 'next/dynamic'
 import { destinations } from '../../lib/destinations'
-import { getHotelLink } from '../../lib/travelAffiliate'
+import { getHotelLink, getBookingSearchUrl } from '../../lib/travelAffiliate'
 import Button from '../../components/Button'
 import { MapIcon, ArrowLeftIcon, StarIcon, SearchIcon } from '../../components/Icons'
 
@@ -27,6 +27,23 @@ const sortOptions = [
   { value: 'reviews-desc', label: 'Most reviewed' },
 ]
 
+const propertyTypeOptions = [
+  { value: '', label: 'Any' },
+  { value: '204', label: 'Hotel' },
+  { value: '216', label: 'B&B' },
+  { value: '226', label: 'Resort' },
+  { value: '224', label: 'Aparthotel' },
+]
+
+const searchAmenityOptions = [
+  { label: 'Pool', code: '433' },
+  { label: 'Parking', code: '2' },
+  { label: 'Terrace', code: '15' },
+  { label: 'Garden', code: '14' },
+  { label: 'Spa', code: '107' },
+  { label: 'Pet-friendly', code: '4' },
+]
+
 export default function DestinationsPage() {
   const [query, setQuery] = useState('')
   const [showSuggestions, setShowSuggestions] = useState(false)
@@ -34,6 +51,14 @@ export default function DestinationsPage() {
   const [selectedStars, setSelectedStars] = useState([])
   const [minRating, setMinRating] = useState(0)
   const [selectedAmenities, setSelectedAmenities] = useState([])
+
+  const [checkin, setCheckin] = useState('')
+  const [checkout, setCheckout] = useState('')
+  const [adults, setAdults] = useState(2)
+  const [rooms, setRooms] = useState(1)
+  const [propertyType, setPropertyType] = useState('')
+  const [selectedSearchAmenities, setSelectedSearchAmenities] = useState([])
+  const [bookingSort, setBookingSort] = useState('price')
 
   const suggestions = useMemo(() => {
     if (!query.trim()) return []
@@ -44,26 +69,25 @@ export default function DestinationsPage() {
     )
   }, [query])
 
-  const openBookingSearch = (city) => {
-    window.open(getHotelLink(city), '_blank', 'noopener,noreferrer')
+  const openUrl = (url) => {
+    window.open(url, '_blank', 'noopener,noreferrer')
   }
 
   const handleSearchSubmit = (e) => {
     e.preventDefault()
     const q = query.trim()
     if (!q) return
-    const exact = destinations.find(
-      (d) =>
-        d.name.toLowerCase() === q.toLowerCase() ||
-        d.country.toLowerCase() === q.toLowerCase()
-    )
-    if (exact) {
-      openBookingSearch(exact.name)
-    } else if (suggestions.length) {
-      openBookingSearch(suggestions[0].name)
-    } else {
-      openBookingSearch(q)
-    }
+    const url = getBookingSearchUrl({
+      location: q,
+      checkin,
+      checkout,
+      adults,
+      rooms,
+      propertyType,
+      amenities: selectedSearchAmenities,
+      sortBy: bookingSort,
+    })
+    openUrl(url)
     setShowSuggestions(false)
   }
 
@@ -76,6 +100,12 @@ export default function DestinationsPage() {
   const toggleAmenity = (amenity) => {
     setSelectedAmenities((prev) =>
       prev.includes(amenity) ? prev.filter((a) => a !== amenity) : [...prev, amenity]
+    )
+  }
+
+  const toggleSearchAmenity = (code) => {
+    setSelectedSearchAmenities((prev) =>
+      prev.includes(code) ? prev.filter((c) => c !== code) : [...prev, code]
     )
   }
 
@@ -109,49 +139,144 @@ export default function DestinationsPage() {
               Find hotels for your trip
             </h1>
             <p className="text-lg text-blue-200 max-w-2xl mx-auto">
-              Search on Booking.com and book your stay through our travel partners — at no extra cost to you.
+              Tell us what you need and we’ll find the best deals on Booking.com — at no extra cost to you.
             </p>
           </div>
 
           <form onSubmit={handleSearchSubmit} className="relative mb-6">
-            <div className="flex items-center gap-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl px-4 py-3 focus-within:ring-2 focus-within:ring-blue-500">
-              <SearchIcon className="w-5 h-5 text-blue-300 shrink-0" />
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                onFocus={() => setShowSuggestions(true)}
-                onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-                placeholder="Where do you want to stay? (e.g. London)"
-                className="bg-transparent flex-grow outline-none text-white placeholder-blue-300"
-              />
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 space-y-4">
+              <div className="relative">
+                <div className="flex items-center gap-2 bg-slate-900/50 border border-white/10 rounded-2xl px-4 py-3 focus-within:ring-2 focus-within:ring-blue-500">
+                  <SearchIcon className="w-5 h-5 text-blue-300 shrink-0" />
+                  <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    onFocus={() => setShowSuggestions(true)}
+                    onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                    placeholder="Where do you want to stay? (e.g. Veneto, Barcelona)"
+                    className="bg-transparent flex-grow outline-none text-white placeholder-blue-300"
+                  />
+                </div>
+                {showSuggestions && suggestions.length > 0 && (
+                  <div className="absolute z-20 top-full left-0 right-0 mt-2 bg-slate-800/95 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
+                    {suggestions.map((dest) => (
+                      <button
+                        key={dest.id}
+                        type="button"
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={() => {
+                          setQuery(dest.name)
+                          openUrl(getHotelLink(dest.name))
+                          setShowSuggestions(false)
+                        }}
+                        className="w-full text-left px-4 py-3 hover:bg-white/10 transition-colors flex items-center justify-between"
+                      >
+                        <span className="font-semibold">{dest.name}</span>
+                        <span className="text-sm text-blue-200">{dest.country}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-blue-200 mb-1">Check-in</label>
+                  <input
+                    type="date"
+                    value={checkin}
+                    onChange={(e) => setCheckin(e.target.value)}
+                    className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-blue-200 mb-1">Check-out</label>
+                  <input
+                    type="date"
+                    value={checkout}
+                    onChange={(e) => setCheckout(e.target.value)}
+                    className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-blue-200 mb-1">Adults</label>
+                  <input
+                    type="number"
+                    min={1}
+                    value={adults}
+                    onChange={(e) => setAdults(Number(e.target.value))}
+                    className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-blue-200 mb-1">Rooms</label>
+                  <input
+                    type="number"
+                    min={1}
+                    value={rooms}
+                    onChange={(e) => setRooms(Number(e.target.value))}
+                    className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-blue-200 mb-1">Property type</label>
+                  <select
+                    value={propertyType}
+                    onChange={(e) => setPropertyType(e.target.value)}
+                    className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    {propertyTypeOptions.map((opt) => (
+                      <option key={opt.value} value={opt.value} className="bg-slate-800 text-white">
+                        {opt.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-blue-200 mb-1">Sort on Booking</label>
+                  <select
+                    value={bookingSort}
+                    onChange={(e) => setBookingSort(e.target.value)}
+                    className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="price" className="bg-slate-800 text-white">Cheapest first</option>
+                    <option value="review_score" className="bg-slate-800 text-white">Best rated</option>
+                    <option value="distance" className="bg-slate-800 text-white">Closest first</option>
+                    <option value="popularity" className="bg-slate-800 text-white">Most popular</option>
+                  </select>
+                </div>
+
+                <div className="sm:col-span-2 md:col-span-4">
+                  <label className="block text-xs font-semibold text-blue-200 mb-2">Must-haves</label>
+                  <div className="flex flex-wrap gap-2">
+                    {searchAmenityOptions.map((a) => (
+                      <button
+                        key={a.code}
+                        type="button"
+                        onClick={() => toggleSearchAmenity(a.code)}
+                        className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
+                          selectedSearchAmenities.includes(a.code)
+                            ? 'bg-blue-600 border-blue-500 text-white'
+                            : 'bg-white/5 border-white/10 text-blue-200 hover:bg-white/10'
+                        }`}
+                      >
+                        {a.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
               <button
                 type="submit"
-                className="shrink-0 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition-colors"
+                className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-colors"
               >
-                Search
+                Find the best deals on Booking.com
               </button>
             </div>
-            {showSuggestions && suggestions.length > 0 && (
-              <div className="absolute z-20 top-full left-0 right-0 mt-2 bg-slate-800/95 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
-                {suggestions.map((dest) => (
-                  <button
-                    key={dest.id}
-                    type="button"
-                    onMouseDown={(e) => e.preventDefault()}
-                    onClick={() => {
-                      setQuery(dest.name)
-                      openBookingSearch(dest.name)
-                      setShowSuggestions(false)
-                    }}
-                    className="w-full text-left px-4 py-3 hover:bg-white/10 transition-colors flex items-center justify-between"
-                  >
-                    <span className="font-semibold">{dest.name}</span>
-                    <span className="text-sm text-blue-200">{dest.country}</span>
-                  </button>
-                ))}
-              </div>
-            )}
           </form>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
