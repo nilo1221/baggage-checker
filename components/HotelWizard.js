@@ -78,6 +78,7 @@ export default function HotelWizard() {
   }
 
   const totalSteps = 7
+  const progress = step / totalSteps
 
   const renderStep = () => {
     switch (step) {
@@ -264,10 +265,16 @@ export default function HotelWizard() {
         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center font-bold text-white">
           AI
         </div>
-        <div>
-          <h2 className="font-bold text-lg">Travel Assistant</h2>
+        <div className="flex-grow">
+          <h2 className="font-bold text-lg">Assistente di viaggio</h2>
           <p className="text-xs text-blue-200">Step {Math.min(step + 1, totalSteps)} di {totalSteps}</p>
         </div>
+      </div>
+      <div className="w-full bg-white/10 rounded-full h-2 mb-6 overflow-hidden">
+        <div
+          className="bg-blue-500 h-2 rounded-full transition-all duration-500"
+          style={{ width: `${progress * 100}%` }}
+        />
       </div>
       <div className="min-h-[140px]">{renderStep()}</div>
     </div>
