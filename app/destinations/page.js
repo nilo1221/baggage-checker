@@ -23,10 +23,10 @@ export default function DestinationsPage() {
           <div className="text-center mb-10">
             <MapIcon className="w-16 h-16 mx-auto mb-4 text-blue-400" />
             <h1 className="text-4xl md:text-5xl font-bold mb-3">
-              Travel & Hotels
+              Find hotels for your trip
             </h1>
             <p className="text-lg text-blue-200 max-w-2xl mx-auto">
-              Find top destinations and book hotels through our travel partners. More cities coming soon.
+              Choose a destination and book your stay through our travel partners — at no extra cost to you.
             </p>
           </div>
 
@@ -46,7 +46,7 @@ export default function DestinationsPage() {
                     <p className="text-blue-200 text-sm">{dest.country}</p>
                     <p className="text-white font-semibold text-sm mt-1">{dest.tagline}</p>
                   </div>
-                  <span className="shrink-0 text-blue-300 group-hover:underline text-sm">Search →</span>
+                  <span className="shrink-0 text-blue-300 group-hover:underline text-sm whitespace-nowrap">Find hotels</span>
                 </a>
               ))}
             </div>
