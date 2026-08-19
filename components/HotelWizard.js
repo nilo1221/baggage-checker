@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { getBookingSearchUrl } from '../lib/travelAffiliate'
+import { ArrowRightIcon, ArrowLeftIcon } from './Icons'
 
 const vibeOptions = [
   { value: 'city', label: 'Centro città' },
@@ -36,6 +37,15 @@ const wizardAmenities = [
   { label: 'Pet-friendly', code: '4' },
 ]
 
+function CompassIcon({ className = 'w-6 h-6' }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M16.24 7.76l-4.24 8.48-4.24-8.48 8.48 4.24-8.48-4.24z" fill="currentColor" opacity="0.4" />
+    </svg>
+  )
+}
+
 export default function HotelWizard() {
   const [step, setStep] = useState(0)
   const [answers, setAnswers] = useState({
@@ -46,6 +56,13 @@ export default function HotelWizard() {
     propertyType: '',
     amenities: [],
   })
+  const [visible, setVisible] = useState(true)
+
+  useEffect(() => {
+    setVisible(false)
+    const t = setTimeout(() => setVisible(true), 50)
+    return () => clearTimeout(t)
+  }, [step])
 
   const update = (key, value) => {
     setAnswers((prev) => ({ ...prev, [key]: value }))
@@ -80,6 +97,25 @@ export default function HotelWizard() {
   const totalSteps = 7
   const progress = step / totalSteps
 
+  const NextBtn = ({ onClick, disabled, label = 'Avanti' }) => (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className="px-5 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-colors inline-flex items-center gap-2"
+    >
+      {label} <ArrowRightIcon className="w-4 h-4" />
+    </button>
+  )
+
+  const BackBtn = ({ onClick }) => (
+    <button
+      onClick={onClick}
+      className="text-sm text-blue-300 hover:text-white py-2 inline-flex items-center gap-1 transition-colors"
+    >
+      <ArrowLeftIcon className="w-4 h-4" /> Indietro
+    </button>
+  )
+
   const renderStep = () => {
     switch (step) {
       case 0:
@@ -88,9 +124,7 @@ export default function HotelWizard() {
             <p className="text-blue-200 mb-4">
               Ciao! Sono il tuo assistente per trovare il soggiorno perfetto. Ti farò qualche domanda e poi ti mostrerò le migliori opzioni su Booking.com.
             </p>
-            <button onClick={next} className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors">
-              Inizia
-            </button>
+            <NextBtn onClick={next} label="Inizia" />
           </div>
         )
       case 1:
@@ -106,9 +140,7 @@ export default function HotelWizard() {
               className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-2 text-white placeholder-blue-300 outline-none focus:ring-2 focus:ring-blue-500 mb-4"
             />
             <div className="flex gap-2">
-              <button onClick={next} disabled={!answers.location.trim()} className="px-6 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold rounded-xl transition-colors">
-                Avanti
-              </button>
+              <NextBtn onClick={next} disabled={!answers.location.trim()} />
             </div>
           </div>
         )
@@ -131,7 +163,7 @@ export default function HotelWizard() {
                 </button>
               ))}
             </div>
-            <button onClick={back} className="text-sm text-blue-300 hover:text-white">Indietro</button>
+            <BackBtn onClick={back} />
           </div>
         )
       case 3:
@@ -153,7 +185,7 @@ export default function HotelWizard() {
                 </button>
               ))}
             </div>
-            <button onClick={back} className="text-sm text-blue-300 hover:text-white">Indietro</button>
+            <BackBtn onClick={back} />
           </div>
         )
       case 4:
@@ -170,10 +202,8 @@ export default function HotelWizard() {
               className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-2 text-white placeholder-blue-300 outline-none focus:ring-2 focus:ring-blue-500 mb-4"
             />
             <div className="flex gap-4 items-center">
-              <button onClick={back} className="text-sm text-blue-300 hover:text-white py-2">Indietro</button>
-              <button onClick={next} className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors">
-                Avanti
-              </button>
+              <BackBtn onClick={back} />
+              <NextBtn onClick={next} />
             </div>
           </div>
         )
@@ -196,7 +226,7 @@ export default function HotelWizard() {
                 </button>
               ))}
             </div>
-            <button onClick={back} className="text-sm text-blue-300 hover:text-white">Indietro</button>
+            <BackBtn onClick={back} />
           </div>
         )
       case 6:
@@ -219,10 +249,8 @@ export default function HotelWizard() {
               ))}
             </div>
             <div className="flex gap-4 items-center">
-              <button onClick={back} className="text-sm text-blue-300 hover:text-white py-2">Indietro</button>
-              <button onClick={next} className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors">
-                Vedi risultati
-              </button>
+              <BackBtn onClick={back} />
+              <NextBtn onClick={next} label="Vedi risultati" />
             </div>
           </div>
         )
@@ -246,10 +274,10 @@ export default function HotelWizard() {
             <p className="text-blue-200 mb-4">
               Secondo me queste opzioni rientrano nella tua scelta. Vuoi vederle e prenotare?
             </p>
-            <button onClick={openBooking} className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-colors mb-2">
-              Prenota su Booking.com
+            <button onClick={openBooking} className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl transition-colors mb-2 inline-flex items-center justify-center gap-2">
+              Prenota su Booking.com <ArrowRightIcon className="w-4 h-4" />
             </button>
-            <button onClick={restart} className="w-full py-2 text-sm text-blue-300 hover:text-white">
+            <button onClick={restart} className="w-full py-2 text-sm text-blue-300 hover:text-white transition-colors">
               Ricomincia
             </button>
           </div>
@@ -260,23 +288,53 @@ export default function HotelWizard() {
   }
 
   return (
-    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 mb-6">
-      <div className="flex items-center gap-3 mb-4">
-        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center font-bold text-white">
-          AI
+    <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 mb-6 overflow-hidden shadow-2xl">
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-indigo-500" />
+      <div className="flex items-center gap-3 mb-5">
+        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-900/30">
+          <CompassIcon className="w-6 h-6 text-white" />
         </div>
         <div className="flex-grow">
           <h2 className="font-bold text-lg">Assistente di viaggio</h2>
-          <p className="text-xs text-blue-200">Step {Math.min(step + 1, totalSteps)} di {totalSteps}</p>
+          <p className="text-xs text-blue-200">Trova il soggiorno perfetto in 7 domande</p>
+        </div>
+        <div className="px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-blue-200 border border-white/10">
+          {Math.min(step + 1, totalSteps)}/{totalSteps}
         </div>
       </div>
-      <div className="w-full bg-white/10 rounded-full h-2 mb-6 overflow-hidden">
+
+      <div className="w-full bg-white/10 rounded-full h-2 mb-4 overflow-hidden">
         <div
-          className="bg-blue-500 h-2 rounded-full transition-all duration-500"
+          className="bg-gradient-to-r from-blue-500 to-indigo-400 h-2 rounded-full transition-all duration-500"
           style={{ width: `${progress * 100}%` }}
         />
       </div>
-      <div className="min-h-[140px]">{renderStep()}</div>
+
+      <div className="flex justify-between mb-6 gap-1">
+        {Array.from({ length: totalSteps }).map((_, i) => (
+          <div
+            key={i}
+            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold border transition-all ${
+              i < step
+                ? 'bg-blue-600 border-blue-500 text-white'
+                : i === step
+                ? 'bg-white/20 border-blue-400 text-white shadow-[0_0_12px_rgba(59,130,246,0.5)]'
+                : 'bg-white/5 border-white/10 text-blue-300'
+            }`}
+          >
+            {i + 1}
+          </div>
+        ))}
+      </div>
+
+      <div
+        key={step}
+        className={`min-h-[140px] transition-all duration-300 ${
+          visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+        }`}
+      >
+        {renderStep()}
+      </div>
     </div>
   )
 }
