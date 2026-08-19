@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic'
 import { destinations } from '../../lib/destinations'
 import { getHotelLink } from '../../lib/travelAffiliate'
 import Button from '../../components/Button'
-import { MapIcon, ArrowLeftIcon, StarIcon } from '../../components/Icons'
+import { MapIcon, ArrowLeftIcon, StarIcon, SearchIcon } from '../../components/Icons'
 
 const DestinationsMap = dynamic(() => import('../../components/DestinationsMap'), {
   ssr: false,
@@ -19,11 +19,53 @@ const ratingOptions = [
   { label: '9+', value: 9 },
 ]
 const amenityOptions = ['WiFi', 'Breakfast', 'Pool', 'Metro', 'Parking', 'Spa']
+const sortOptions = [
+  { value: 'default', label: 'Sort by' },
+  { value: 'price-asc', label: 'Price: low to high' },
+  { value: 'rating-desc', label: 'Rating: high to low' },
+  { value: 'distance-asc', label: 'Distance: nearest first' },
+  { value: 'reviews-desc', label: 'Most reviewed' },
+]
 
 export default function DestinationsPage() {
+  const [query, setQuery] = useState('')
+  const [showSuggestions, setShowSuggestions] = useState(false)
+  const [sortBy, setSortBy] = useState('default')
   const [selectedStars, setSelectedStars] = useState([])
   const [minRating, setMinRating] = useState(0)
   const [selectedAmenities, setSelectedAmenities] = useState([])
+
+  const suggestions = useMemo(() => {
+    if (!query.trim()) return []
+    const q = query.toLowerCase()
+    return destinations.filter(
+      (d) =>
+        d.name.toLowerCase().includes(q) || d.country.toLowerCase().includes(q)
+    )
+  }, [query])
+
+  const openBookingSearch = (city) => {
+    window.open(getHotelLink(city), '_blank', 'noopener,noreferrer')
+  }
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault()
+    const q = query.trim()
+    if (!q) return
+    const exact = destinations.find(
+      (d) =>
+        d.name.toLowerCase() === q.toLowerCase() ||
+        d.country.toLowerCase() === q.toLowerCase()
+    )
+    if (exact) {
+      openBookingSearch(exact.name)
+    } else if (suggestions.length) {
+      openBookingSearch(suggestions[0].name)
+    } else {
+      openBookingSearch(q)
+    }
+    setShowSuggestions(false)
+  }
 
   const toggleStar = (star) => {
     setSelectedStars((prev) =>
@@ -38,13 +80,20 @@ export default function DestinationsPage() {
   }
 
   const filtered = useMemo(() => {
-    return destinations.filter((dest) => {
+    let result = destinations.filter((dest) => {
       if (selectedStars.length && !selectedStars.includes(dest.stars)) return false
       if (dest.rating < minRating) return false
       if (selectedAmenities.length && !selectedAmenities.every((a) => dest.amenities.includes(a))) return false
       return true
     })
-  }, [selectedStars, minRating, selectedAmenities])
+
+    if (sortBy === 'price-asc') result = [...result].sort((a, b) => a.price - b.price)
+    if (sortBy === 'rating-desc') result = [...result].sort((a, b) => b.rating - a.rating)
+    if (sortBy === 'distance-asc') result = [...result].sort((a, b) => a.distance - b.distance)
+    if (sortBy === 'reviews-desc') result = [...result].sort((a, b) => b.reviews - a.reviews)
+
+    return result
+  }, [selectedStars, minRating, selectedAmenities, sortBy])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-blue-950 text-white">
@@ -60,11 +109,52 @@ export default function DestinationsPage() {
               Find hotels for your trip
             </h1>
             <p className="text-lg text-blue-200 max-w-2xl mx-auto">
-              Choose a destination and book your stay through our travel partners — at no extra cost to you.
+              Search on Booking.com and book your stay through our travel partners — at no extra cost to you.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <form onSubmit={handleSearchSubmit} className="relative mb-6">
+            <div className="flex items-center gap-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl px-4 py-3 focus-within:ring-2 focus-within:ring-blue-500">
+              <SearchIcon className="w-5 h-5 text-blue-300 shrink-0" />
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onFocus={() => setShowSuggestions(true)}
+                onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                placeholder="Where do you want to stay? (e.g. London)"
+                className="bg-transparent flex-grow outline-none text-white placeholder-blue-300"
+              />
+              <button
+                type="submit"
+                className="shrink-0 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition-colors"
+              >
+                Search
+              </button>
+            </div>
+            {showSuggestions && suggestions.length > 0 && (
+              <div className="absolute z-20 top-full left-0 right-0 mt-2 bg-slate-800/95 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
+                {suggestions.map((dest) => (
+                  <button
+                    key={dest.id}
+                    type="button"
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={() => {
+                      setQuery(dest.name)
+                      openBookingSearch(dest.name)
+                      setShowSuggestions(false)
+                    }}
+                    className="w-full text-left px-4 py-3 hover:bg-white/10 transition-colors flex items-center justify-between"
+                  >
+                    <span className="font-semibold">{dest.name}</span>
+                    <span className="text-sm text-blue-200">{dest.country}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </form>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4">
               <p className="text-sm font-semibold text-blue-200 mb-2">Star rating</p>
               <div className="flex flex-wrap gap-2">
@@ -120,6 +210,21 @@ export default function DestinationsPage() {
                   </button>
                 ))}
               </div>
+            </div>
+
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4">
+              <p className="text-sm font-semibold text-blue-200 mb-2">Sort by</p>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-1.5 text-sm text-white outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                {sortOptions.map((opt) => (
+                  <option key={opt.value} value={opt.value} className="bg-slate-800 text-white">
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
