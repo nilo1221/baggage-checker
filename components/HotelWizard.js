@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getBookingSearchUrl } from '../lib/travelAffiliate'
+import { useRouter } from 'next/navigation'
 import { ArrowRightIcon, ArrowLeftIcon } from './Icons'
 
 const vibeOptions = [
@@ -57,6 +57,7 @@ export default function HotelWizard() {
     amenities: [],
   })
   const [visible, setVisible] = useState(true)
+  const router = useRouter()
 
   useEffect(() => {
     setVisible(false)
@@ -77,14 +78,15 @@ export default function HotelWizard() {
     }))
   }
 
-  const openBooking = () => {
-    const url = getBookingSearchUrl({
-      location: answers.location,
-      propertyType: answers.propertyType,
-      amenities: answers.amenities,
-      sortBy: 'price',
-    })
-    window.open(url, '_blank', 'noopener,noreferrer')
+  const goToResults = () => {
+    const params = new URLSearchParams()
+    if (answers.location.trim()) params.set('location', answers.location.trim())
+    if (answers.vibe) params.set('vibe', answers.vibe)
+    if (answers.distance && answers.distance !== 'any') params.set('distance', answers.distance)
+    if (answers.budget) params.set('budget', answers.budget)
+    if (answers.propertyType) params.set('propertyType', answers.propertyType)
+    if (answers.amenities.length) params.set('amenities', answers.amenities.join(','))
+    router.push(`/destinations?${params.toString()}`)
   }
 
   const next = () => setStep((s) => s + 1)
@@ -274,8 +276,8 @@ export default function HotelWizard() {
             <p className="text-blue-200 mb-4">
               Secondo me queste opzioni rientrano nella tua scelta. Vuoi vederle e prenotare?
             </p>
-            <button onClick={openBooking} className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl transition-colors mb-2 inline-flex items-center justify-center gap-2">
-              Prenota su Booking.com <ArrowRightIcon className="w-4 h-4" />
+            <button onClick={goToResults} className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl transition-colors mb-2 inline-flex items-center justify-center gap-2">
+              Vedi mete consigliate <ArrowRightIcon className="w-4 h-4" />
             </button>
             <button onClick={restart} className="w-full py-2 text-sm text-blue-300 hover:text-white transition-colors">
               Ricomincia
