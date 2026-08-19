@@ -6,6 +6,7 @@ import { destinations } from '../../lib/destinations'
 import { getHotelLink, getBookingSearchUrl } from '../../lib/travelAffiliate'
 import Button from '../../components/Button'
 import { MapIcon, ArrowLeftIcon, StarIcon, SearchIcon } from '../../components/Icons'
+import HotelWizard from '../../components/HotelWizard'
 
 const DestinationsMap = dynamic(() => import('../../components/DestinationsMap'), {
   ssr: false,
@@ -142,6 +143,8 @@ export default function DestinationsPage() {
               Tell us what you need and we’ll find the best deals on Booking.com — at no extra cost to you.
             </p>
           </div>
+
+          <HotelWizard />
 
           <form onSubmit={handleSearchSubmit} className="relative mb-6">
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 space-y-4">
