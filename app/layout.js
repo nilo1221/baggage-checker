@@ -7,7 +7,7 @@ export const metadata = {
   metadataBase: new URL(
     process.env.VERCEL_PROJECT_PRODUCTION_URL
       ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : 'https://packandfly.vercel.app'
+      : 'https://baggage-checker-yqf9.vercel.app'
   ),
   title: {
     default: 'Pack & Fly - Airline Cabin Bag Finder',

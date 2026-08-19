@@ -1,7 +1,7 @@
 export default function sitemap() {
   const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
     ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : 'https://packandfly.vercel.app'
+    : 'https://baggage-checker-yqf9.vercel.app'
 
   const routes = [
     { path: '', priority: 1, changeFrequency: 'daily' },
