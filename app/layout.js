@@ -59,6 +59,22 @@ export default function RootLayout({ children }) {
           src="https://www.anrdoezrs.net/am/101863603/include/allCj/impressions/page/am.js"
           strategy="afterInteractive"
         />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-8C0LLLJQQ3"
+          strategy="afterInteractive"
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-8C0LLLJQQ3');
+            `,
+          }}
+        />
       </body>
     </html>
   )
